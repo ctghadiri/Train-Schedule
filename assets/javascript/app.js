@@ -42,9 +42,42 @@ var frequency = "";
 $("#add-train").on("click", function(event){
     event.preventDefault();
 
+    // gathering values
     trainName = $("#train-input").val().trim();
     destination = $("#destination-input").val().trim();
-    initialTime = $("#initial-time-input").val().trim();
+    initialTime = moment($("#initial-time-input").val().trim(), "HH:mm").format("");
     frequency = $("#frequency-input").val().trim();
-})
 
+    // code for push
+    dataRef.ref().push({
+
+        trainName: trainName,
+        destination: destination,
+        initialTime: initialTime,
+        frequency: frequency,
+    });
+
+    // Clears all of the text-boxes
+    $("#train-input").val("");
+    $("#destination-input").val("");
+    $("#initial-time-input").val("");
+    $("#frequency-input").val("");
+});
+
+// Firebase watcher + initial loader
+dataRef.ref().on("child_added", function(childSnapshot) {
+    console.log(childSnapshot.val())
+    count++
+
+    // Log everything that's coming out of snapshot
+    console.log(childSnapshot.val().trainName);
+    console.log(childSnapshot.val().destination);
+    console.log(childSnapshot.val().initialTime);
+    console.log(childSnapshot.val().frequency);     
+
+
+
+    // Handle the errors
+}, function (errorObject) {
+    console.log("Errors: " + errorObject.code);
+});
