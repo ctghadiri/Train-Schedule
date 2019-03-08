@@ -67,7 +67,6 @@ $("#add-train").on("click", function(event){
 // Firebase watcher + initial loader
 dataRef.ref().on("child_added", function(childSnapshot) {
     console.log(childSnapshot.val())
-    count++
 
     // Log everything that's coming out of snapshot
     console.log(childSnapshot.val().trainName);
@@ -75,8 +74,29 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     console.log(childSnapshot.val().initialTime);
     console.log(childSnapshot.val().frequency);     
 
+    var currentTime = moment();
+    var diffTime = moment().diff(moment(initialTime), "minutes");
+    var timeAppartStart = diffTime % frequency;
+    var nextArrival = moment().add(minutesAway, "minutes").format("hh:mm");
+
+    var minutesAway = frequency - timeAppartStart;
+    
 
 
+
+
+    // create and append table data to new table row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(destination),
+        $("<td>").text(frequency),
+        $("<td>").text(nextArrival),
+        $("<td>").text(minutesAway),
+    );
+
+
+    // Append new row to table
+    $("#train-table > tbody").append(newRow)
     // Handle the errors
 }, function (errorObject) {
     console.log("Errors: " + errorObject.code);
