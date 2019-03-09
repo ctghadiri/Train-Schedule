@@ -43,19 +43,26 @@ $("#add-train").on("click", function(event){
     event.preventDefault();
 
     // gathering values
-    trainName = $("#train-input").val().trim();
-    destination = $("#destination-input").val().trim();
-    initialTime = moment($("#initial-time-input").val().trim(), "HH:mm").format("");
-    frequency = $("#frequency-input").val().trim();
+    if(!$("#train-input").val() || !$("#destination-input").val() || !$("#initial-time-input").val() || !$("#frequency-input").val()){
+        alert("all")
+    }
 
-    // code for push
-    dataRef.ref().push({
-
-        trainName: trainName,
-        destination: destination,
-        initialTime: initialTime,
-        frequency: frequency,
-    });
+    else{
+        trainName = $("#train-input").val().trim();
+        destination = $("#destination-input").val().trim();
+        initialTime = moment($("#initial-time-input").val().trim(), "hh:mm").format("");
+        frequency = $("#frequency-input").val().trim();
+        
+        // code for push
+        dataRef.ref().push({
+            
+            trainName: trainName,
+            destination: destination,
+            initialTime: initialTime,
+            frequency: frequency,
+        });
+        
+    }
 
     // Clears all of the text-boxes
     $("#train-input").val("");
@@ -69,17 +76,26 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     console.log(childSnapshot.val())
 
     // Log everything that's coming out of snapshot
-    console.log(childSnapshot.val().trainName);
-    console.log(childSnapshot.val().destination);
-    console.log(childSnapshot.val().initialTime);
-    console.log(childSnapshot.val().frequency);     
+    var name = childSnapshot.val().trainName;
+    var dest = childSnapshot.val().destination;
+    var initialT = childSnapshot.val().initialTime;
+    var freq = childSnapshot.val().frequency;     
 
+    // variables dealing with time and calculating time information
     var currentTime = moment();
-    var diffTime = moment().diff(moment(initialTime), "minutes");
-    var timeAppartStart = diffTime % frequency;
-    var nextArrival = moment().add(minutesAway, "minutes").format("hh:mm");
+    console.log("current time " + moment(currentTime.format("hh:mm")));
 
-    var minutesAway = frequency - timeAppartStart;
+    var diffTime = moment().diff(moment(initialT), "minutes");
+    console.log("diffTime " + diffTime);
+
+    var timeAppartStart = diffTime % freq;
+    console.log("timeAppartStart " + timeAppartStart)
+
+    var minutesAway = freq - timeAppartStart;
+    console.log("minutes away " + minutesAway);
+
+    var nextArrival = moment().add(minutesAway, "minutes");
+    console.log("next arrival " + nextArrival);
     
 
 
@@ -87,11 +103,11 @@ dataRef.ref().on("child_added", function(childSnapshot) {
 
     // create and append table data to new table row
     var newRow = $("<tr>").append(
-        $("<td>").text(trainName),
-        $("<td>").text(destination),
-        $("<td>").text(frequency),
-        $("<td>").text(nextArrival),
-        $("<td>").text(minutesAway),
+        $("<td>").text(name),
+        $("<td>").text(dest),
+        $("<td>").text(freq),
+        $("<td>").text(moment(nextArrival).format("hh:mm a")),
+        $("<td>").text(minutesAway)
     );
 
 
