@@ -44,7 +44,8 @@ $("#add-train").on("click", function(event){
 
     // gathering values
     if(!$("#train-input").val() || !$("#destination-input").val() || !$("#initial-time-input").val() || !$("#frequency-input").val()){
-        alert("all")
+        alert("Please fill out the form completely")
+        // 
     }
 
     else{
@@ -88,10 +89,10 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     var diffTime = moment().diff(moment(initialT), "minutes");
     console.log("diffTime " + diffTime);
 
-    var timeAppartStart = diffTime % freq;
-    console.log("timeAppartStart " + timeAppartStart)
+    var remainderTime = diffTime % freq;
+    console.log("remainderTime " + remainderTime)
 
-    var minutesAway = freq - timeAppartStart;
+    var minutesAway = freq - remainderTime;
     console.log("minutes away " + minutesAway);
 
     var nextArrival = moment().add(minutesAway, "minutes");
