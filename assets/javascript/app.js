@@ -12,7 +12,6 @@
     // frequency (min)
     // submit button
 // firebase to hold data
-    // 
 
 
 
@@ -42,10 +41,9 @@ var frequency = "";
 $("#add-train").on("click", function(event){
     event.preventDefault();
 
-    // gathering values
+    // gathering values when form is filled
     if(!$("#train-input").val() || !$("#destination-input").val() || !$("#initial-time-input").val() || !$("#frequency-input").val()){
-        alert("Please fill out the form completely")
-        // 
+        $("#invalid-input").text("Please fill out the form completely baby!")
     }
 
     else{
@@ -70,6 +68,7 @@ $("#add-train").on("click", function(event){
     $("#destination-input").val("");
     $("#initial-time-input").val("");
     $("#frequency-input").val("");
+    $("#invalid-input").text("")
 });
 
 // Firebase watcher + initial loader

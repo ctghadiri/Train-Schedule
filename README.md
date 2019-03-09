@@ -1,5 +1,12 @@
 # Train-Schedule
-Train Schedule
+
+### IMAGE of Final Product
+
+![ScreenShot](/assets/images/Screenshot2.png)
+![ScreenShot](/assets/images/screenshot1.png)
+
+
+##Train Schedule
 * Application
     - Enter train information
     - Displays 
@@ -42,10 +49,6 @@ Train Schedule
 
 https://ctghadiri.github.io/Train-Schedule/
 
-### IMAGE of Final Product
-
-![ScreenShot](/assets/images/Screen-Shot1.png)
-![ScreenShot](/assets/images/Screen-Shot2.png)
 
 ### Learning Points
 * A solid plan via pseudocoding saves time and energy
@@ -56,6 +59,8 @@ https://ctghadiri.github.io/Train-Schedule/
 * Inspecting the element and sources for problems in javascript
     - identifies lines where its causing problems
     - what kind of errors we're dealing with
+* Naming variables
+    - Making them distinct to what they do and the area they act upon can be a lifesaver
 * Solid Google-Fu is indispensable
 
 ### Author
